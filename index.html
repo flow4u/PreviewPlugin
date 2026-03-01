@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreviewPlugin Demo</title>
+    <link rel="stylesheet" href="preview-plugin.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .file-group h3 {
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .file-item {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        /* Dark Mode Styles for Demo Page */
+        :root[data-theme="dark"] body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        :root[data-theme="dark"] h1 {
+            color: #fff;
+        }
+
+        :root[data-theme="dark"] .file-group h3 {
+            border-color: #333;
+            color: #aaa;
+        }
+
+        :root[data-theme="dark"] .file-item {
+            background: #1e1e1e;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        :root[data-theme="dark"] .file-link {
+            color: #3498db;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        :root[data-theme="dark"] .theme-toggle-btn {
+            background: #333;
+            color: #fff;
+            border-color: #444;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="theme-toggle" class="theme-toggle-btn">
+        <span class="icon">🌓</span> <span>Toggle Theme</span>
+    </button>
+
+    <header>
+        <h1>PreviewPlugin Demo</h1>
+        <p>Click any file below to see the PreviewPlugin in action!</p>
+    </header>
+
+    <div class="demo-grid">
+        <section class="file-group">
+            <h3>🖼️ Images</h3>
+            <ul class="file-list">
+                <li class="file-item"><a href="assets/sample.png" class="file-link" data-preview>sample.png</a></li>
+                <li class="file-item"><a href="assets/sample.jpg" class="file-link" data-preview>sample.jpg</a></li>
+                <li class="file-item"><a href="assets/sample.gif" class="file-link" data-preview>sample.gif</a></li>
+                <li class="file-item"><a href="assets/sample.webp" class="file-link" data-preview>sample.webp</a></li>
+                <li class="file-item"><a href="assets/sample.svg" class="file-link" data-preview>sample.svg</a></li>
+                <li class="file-item"><a href="assets/sample.bmp" class="file-link" data-preview>sample.bmp</a></li>
+            </ul>
+        </section>
+
+        <section class="file-group">
+            <h3>📑 Documents</h3>
+            <ul class="file-list">
+                <li class="file-item"><a href="assets/sample.pdf" class="file-link" data-preview>sample.pdf</a></li>
+                <li class="file-item"><a href="assets/sample.docx" class="file-link" data-preview>sample.docx</a></li>
+                <li class="file-item"><a href="assets/sample.doc" class="file-link" data-preview>sample.doc</a></li>
+                <li class="file-item"><a href="assets/sample.odt" class="file-link" data-preview>sample.odt</a></li>
+                <li class="file-item"><a href="assets/sample.rtf" class="file-link" data-preview>sample.rtf</a></li>
+                <li class="file-item"><a href="assets/sample.md" class="file-link" data-preview>sample.md</a></li>
+                <li class="file-item"><a href="assets/sample.tex" class="file-link" data-preview>sample.tex</a></li>
+            </ul>
+        </section>
+
+        <section class="file-group">
+            <h3>📊 Data & Office</h3>
+            <ul class="file-list">
+                <li class="file-item"><a href="assets/sample.csv" class="file-link" data-preview>sample.csv</a></li>
+                <li class="file-item"><a href="assets/sample.xlsx" class="file-link" data-preview>sample.xlsx</a></li>
+                <li class="file-item"><a href="assets/sample.ods" class="file-link" data-preview>sample.ods</a></li>
+            </ul>
+        </section>
+
+        <section class="file-group">
+            <h3>⚙️ Config & Others</h3>
+            <ul class="file-list">
+                <li class="file-item"><a href="assets/sample.txt" class="file-link" data-preview>sample.txt</a></li>
+                <li class="file-item"><a href="assets/sample.log" class="file-link" data-preview>sample.log</a></li>
+                <li class="file-item"><a href="assets/sample.yaml" class="file-link" data-preview>sample.yaml</a></li>
+                <li class="file-item"><a href="assets/sample.ini" class="file-link" data-preview>sample.ini</a></li>
+                <li class="file-item"><a href="assets/sample.html" class="file-link" data-preview>sample.html</a></li>
+                <li class="file-item"><a href="assets/sample_50mb.xml" class="file-link" data-preview>sample_50mb.xml
+                        (Large)</a></li>
+                <li class="file-item"><a href="assets/sample_150mb.xml" class="file-link" data-preview>sample_150mb.xml
+                        (Huge)</a></li>
+                <li class="file-item"><a href="assets/sample.zip" class="file-link" data-preview>sample.zip</a></li>
+                <li class="file-item"><a href="assets/sample.exe" class="file-link" data-preview>sample.exe
+                        (Unsupported)</a></li>
+                <li class="file-item"><a href="assets/sample.psd" class="file-link" data-preview>sample.psd
+                        (Unsupported)</a></li>
+                <li class="file-item"><a href="assets/sample.mp4" class="file-link" data-preview>sample.mp4
+                        (Unsupported)</a></li>
+            </ul>
+        </section>
+        <section class="file-group">
+            <h3>📜 Scripts & Code</h3>
+            <ul class="file-list">
+                <li class="file-item"><a href="assets/sample.py" class="file-link" data-preview>sample.py</a></li>
+                <li class="file-item"><a href="assets/sample.ps1" class="file-link" data-preview>sample.ps1</a></li>
+                <li class="file-item"><a href="assets/sample.sh" class="file-link" data-preview>sample.sh</a></li>
+                <li class="file-item"><a href="assets/sample.js" class="file-link" data-preview>sample.js</a></li>
+                <li class="file-item"><a href="assets/sample.css" class="file-link" data-preview>sample.css</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        PreviewPlugin &copy; 2026
+    </footer>
+
+    <script src="preview-plugin.js"></script>
+    <script>
+        const themeBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Initialize from system preference if no attribute set
+        if (!html.hasAttribute('data-theme')) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                html.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        themeBtn.onclick = () => {
+            const current = html.getAttribute('data-theme') || 'light';
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+        };
+    </script>
+</body>
+
+</html>

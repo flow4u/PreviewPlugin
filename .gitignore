@@ -1,0 +1,21 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Developer tools
+.gemini/
+.agents/
+.agent/
+_agents/
+_agent/
+tmp/
+*.log
+
+# Dependencies (if any were added later)
+node_modules/
+dist/
+build/
+
+# Large Sample Files
+assets/sample_50mb.xml
+assets/sample_150mb.xml
