@@ -1,48 +1,36 @@
-# PreviewPlugin — Implementation Walkthrough
+### 1. File Details in Header
+- **Feature**: Displays the real filename and a human-readable size (e.g., `KB`, `MB`) to the left of the download button.
+- **Fix**: Resolved an issue where blob UUIDs were displayed instead of the original filename.
+- **Implementation**: Uses a new `formatBytes` utility and robust `getFileName` extraction.
 
-## 1. Overview
-The `PreviewPlugin` is a client-side library that intercepts file links and renders them in a secure modal. This walkthrough covers all major features and the security posture.
+### 2. Large File Handling & Progress Bar
+- **Progress Bar**: Added a dynamic progress bar that displays the download percentage for large files.
+- **Large File Consent**: Files exceeding 25MB trigger a security and performance warning. Users can now choose to override this limit if they understand the risks (specifically for the new 50MB and 150MB XML samples).
+- **Implementation**: Replaced standard `fetch` with `XMLHttpRequest` to track download progress reliably.
 
-## 2. Key Features
+### 3. Dark & Light Mode Support
+- **Automatic Sync**: The plugin now detects the theme from the host page (via `data-theme` attribute, `dark` class, or system preference).
+- **Real-time Updates**: A `MutationObserver` ensures the preview modal updates instantly if the page theme changes while it's open.
+- **Demo Toggle**: Added a theme toggle button to `index.html` to showcase the transition.
 
-### Global Download & Consent
-- Every preview window has a **Download** button.
-- **Mandatory consent dialog** blocks all downloads until the user acknowledges the harmful payload risk.
-- **Session opt-out**: "Don't show again for this session" bypasses the modal until page refresh.
-- Amber **⚠️ warning toasts** appear at every download event.
+### 4. Enhanced Sample Files
+- **Documents & Code**: All script samples (`.py`, `.js`, `.sh`) and text/markdown samples have been updated to be at least 2 pages long.
+- **Stress Testing**: Samples now include "very long lines" (up to 1200 characters) to verify that the UI handles wrapping and scrolling without layout breaks.
 
-### Scripting & Code Support
-- Supports 15+ languages (Python, Bash, PowerShell, SQL, etc.) with mono-spaced rendering.
+### 5. Removal of Legacy .doc Support
+- **Modernization**: Removed support for the legacy binary `.doc` format to focus on modern `.docx` and OpenDocument standards.
+- **Clean up**: Deleted `assets/sample.doc` and removed the preview link from the demo page.
 
-### Interactive ZIP Explorer
-- Navigate and preview files within a ZIP archive in-browser — zero extraction.
+## Verified Assets
+- `assets/sample_50mb.xml`: ~50MB XML dataset (Local only).
+- `assets/sample_150mb.xml`: ~95MB XML dataset (Local only, reduced for GitHub compatibility).
+- `assets/sample.js`, `assets/sample.py`, `assets/sample.sh`: Expanded to >60KB with long lines.
 
-## 3. Security Hardening
-
-| Control | Implementation |
-| :--- | :--- |
-| SRI (SHA-512) | All CDN-hosted dependencies |
-| DOMPurify | All parsed HTML output |
-| Iframe Sandboxing | PDF / HTML previews |
-| File Size Limit | 25MB global default |
-| Download Consent | Mandatory per-download blocking dialog |
-
-## 4. Regulatory Compliance
-
-| Framework | Score | Key Controls |
-| :--- | :---: | :--- |
-| **ISO/IEC 27001:2022** | **8.2/10** | A.8.28, A.8.20, A.5.14, A.8.9 |
-| **NIS2 Article 21** | **7.8/10** | (d) Supply Chain, (e) Secure Dev, (h) Cyber Hygiene |
-
-Full scoring rationale in [SECURITY_IMPACT_ASSESSMENT.md](SECURITY_IMPACT_ASSESSMENT.md) — Section 6.
-
-- [SECURITY_COMPLIANCE_REPORT.md](SECURITY_COMPLIANCE_REPORT.md)
-
-## 6. Git & GitHub Integration
+## Git & GitHub Integration
 - **Status**: Local repository successfully linked to `https://github.com/flow4u/PreviewPlugin.git`.
 - **Primary Branch**: `main`.
 - **Initial Push**: All core project files, documentation, and small/medium assets have been pushed.
-- **Exclusions**: `assets/sample_50mb.xml` and `assets/sample_150mb.xml` are excluded via `.gitignore` to comply with GitHub's file size limits (100MB per file) and since Git LFS was not configured. 
+- **Exclusions**: `assets/sample_50mb.xml` and `assets/sample_150mb.xml` are excluded via `.gitignore` to comply with GitHub file size limits.
 
 ---
 *PreviewPlugin — Production-ready, compliance-mapped, privacy-first.*
