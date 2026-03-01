@@ -13,7 +13,7 @@
             supportedExtensions: [
                 'png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg', 'eps',
                 'csv', 'tsv', 'pdf', 'zip', 'txt', 'log', 'json', 'xml', 'yaml', 'ini',
-                'html', 'htm', 'md', 'markdown', 'docx', 'doc', 'odt',
+                'html', 'htm', 'md', 'markdown', 'docx', 'odt',
                 'tex', 'latex', 'xlsx', 'xls', 'ods', 'odt', 'rtf',
                 'py', 'ps1', 'js', 'sh', 'bat', 'rb', 'pl', 'php', 'go', 'java', 'c', 'cpp', 'cs', 'sql', 'css'
             ],
@@ -898,7 +898,7 @@
             try {
                 const binaryTypes = [
                     'png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg', 'tiff', 'tif', 'pdf',
-                    'html', 'htm', 'docx', 'doc', 'odt', 'xlsx', 'xls', 'ods', 'pptx', 'ppt', 'odp'
+                    'html', 'htm', 'docx', 'odt', 'xlsx', 'xls', 'ods', 'pptx', 'ppt', 'odp'
                 ];
                 const textTypes = ['csv', 'tsv', 'txt', 'log', 'json', 'xml', 'yaml', 'ini', 'md', 'markdown', 'tex', 'latex'];
 

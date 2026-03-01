@@ -36,10 +36,13 @@ The `PreviewPlugin` is a client-side library that intercepts file links and rend
 
 Full scoring rationale in [SECURITY_IMPACT_ASSESSMENT.md](SECURITY_IMPACT_ASSESSMENT.md) — Section 6.
 
-## 5. Security Documentation
-- [SECURITY_AUDIT.md](SECURITY_AUDIT.md)
-- [SECURITY_IMPACT_ASSESSMENT.md](SECURITY_IMPACT_ASSESSMENT.md)
 - [SECURITY_COMPLIANCE_REPORT.md](SECURITY_COMPLIANCE_REPORT.md)
+
+## 6. Git & GitHub Integration
+- **Status**: Local repository successfully linked to `https://github.com/flow4u/PreviewPlugin.git`.
+- **Primary Branch**: `main`.
+- **Initial Push**: All core project files, documentation, and small/medium assets have been pushed.
+- **Exclusions**: `assets/sample_50mb.xml` and `assets/sample_150mb.xml` are excluded via `.gitignore` to comply with GitHub's file size limits (100MB per file) and since Git LFS was not configured. 
 
 ---
 *PreviewPlugin — Production-ready, compliance-mapped, privacy-first.*
