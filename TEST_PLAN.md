@@ -44,12 +44,12 @@ These are fast, top-level checks after every deployment. The entire suite should
 
 ---
 
-### S-03 — PDF Preview Renders in Iframe
+### S-03 — PDF Preview Renders Natively
 | | |
 | :--- | :--- |
 | **Story** | As a user I click a PDF and view it without downloading. |
 | **Steps** | 1. Click `sample.pdf`. |
-| **Expect ✅** | PDF renders inside the preview modal in an embedded iframe. Download button visible in header. |
+| **Expect ✅** | PDF renders inside the preview modal in an embedded object tag (native viewer). Download button visible in header. |
 | **Do NOT see ❌** | Browser "Save As" dialog. Blank white area inside modal. |
 
 ---
@@ -260,7 +260,7 @@ These tests verify that the plugin resists abuse. They should all result in **no
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | S-01 | Page loads without errors | | | | |
 | S-02 | Image preview opens/closes | | | | |
-| S-03 | PDF renders in iframe | | | | |
+| S-03 | PDF renders natively | | | | |
 | S-04 | Markdown renders formatted | | | | |
 | S-05 | Download consent modal appears | | | | |
 | S-06 | Unsupported file fallback UI | | | | |

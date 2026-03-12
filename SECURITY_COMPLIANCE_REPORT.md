@@ -25,7 +25,7 @@ For regulatory compliance mapping (ISO 27001 / NIS2), see [Security Impact Asses
 | **No Sensitive Data in Persistence** | ✅ Pass | No `localStorage` or `sessionStorage` usage. Session consent state lives in-memory only. |
 | **Zero Memory Leakage** | ✅ Pass | Automated `URL.revokeObjectURL` cleanup on modal closure. |
 | **Safe innerHTML Usage** | ✅ Pass | No `innerHTML` without `DOMPurify` protection or inherently safe sources. |
-| **X-Frame-Options / Sandbox** | ✅ Pass | Iframes use `sandbox="allow-scripts allow-same-origin allow-forms allow-popups"`. |
+| **X-Frame-Options / Sandbox** | ✅ Pass | HTML iframes use `sandbox="allow-scripts allow-same-origin allow-forms allow-popups"`. PDFs use native `<object>` tags. |
 | **User Consent for Risky Actions** | ✅ Pass | Mandatory blocking consent dialog (with "I understand" checkbox) required before any download. |
 
 ## Final Assessment Conclusion

@@ -19,7 +19,7 @@ The `PreviewPlugin` is a client-side utility designed to reduce the need for unt
 - **Vector**: Maliciously crafted documents (Markdown, HTML, Spreadsheet, DOCX) containing embedded scripts.
 - **Mitigation Status**: **Resolved**.
     - **DOMPurify Integration**: All HTML generated from complex parsers is sanitized using `DOMPurify` before rendering.
-    - **IFRAME Isolation**: Documents like PDF and HTML are rendered in an isolated `<iframe>` with a restrictive `sandbox` attribute, preventing access to the parent window's DOM or cookies.
+    - **Isolation**: HTML is rendered in an isolated `<iframe>` with a restrictive `sandbox` attribute. PDFs are rendered using a native browser `<object>` tag, relying on the browser's built-in PDF security perimeter.
     - **Safe Sinks**: Plain text components (RTF, Code, CSV) use `textContent` exclusively, ensuring no script execution is possible.
 
 ### 2.2 Resource Exhaustion & Denial of Service (DoS)

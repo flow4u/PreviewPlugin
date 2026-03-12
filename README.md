@@ -19,7 +19,7 @@
 | **Documents** | `pdf`, `docx`, `odt`, `rtf`, `txt`, `md` |
 | **Spreadsheets** | `xlsx`, `xls`, `ods`, `csv`, `tsv`, `json` |
 | **Images** | `png`, `jpg`, `jpeg`, `gif`, `webp`, `bmp`, `svg`, `tiff` |
-| **Scripts & Code**| `py`, `js`, `sh`, `bat`, `rb`, `pl`, `php`, `go`, `java`, `c`, `cs`, `sql`, `css`, `ps1` |
+| **Scripts & Code**| `r`, `py`, `js`, `sh`, `bat`, `rb`, `pl`, `php`, `go`, `java`, `c`, `cs`, `sql`, `css`, `ps1` |
 | **Archives** | `zip` |
 
 ## Quick Start
