@@ -14,8 +14,8 @@
                 'png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg', 'eps',
                 'csv', 'tsv', 'pdf', 'zip', 'txt', 'log', 'json', 'xml', 'yaml', 'ini',
                 'html', 'htm', 'md', 'markdown', 'docx', 'odt',
-                'tex', 'latex', 'xlsx', 'xls', 'ods', 'odt', 'rtf',
-                'py', 'ps1', 'js', 'sh', 'bat', 'rb', 'pl', 'php', 'go', 'java', 'c', 'cpp', 'cs', 'sql', 'css'
+                'tex', 'latex', 'xlsx', 'xls', 'ods', 'rtf',
+                'py', 'ps1', 'js', 'sh', 'bat', 'rb', 'pl', 'php', 'go', 'java', 'c', 'cpp', 'cs', 'sql', 'r', 'css', 'scss', 'less'
             ],
             jszipUrl: 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
             markedUrl: 'https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js',
@@ -334,6 +334,16 @@
 
             // Handle Blob objects passed directly
             try {
+                console.log('Opening preview:', { url, extension, isLocalFile });
+                const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg', 'tiff', 'tif'];
+                const skipFetch = isLocalFile && (['pdf', 'html', 'htm'].includes(extension) || imageExtensions.includes(extension));
+
+                if (skipFetch) {
+                    console.log('Bypassing fetch for local asset:', extension);
+                    this.renderContent(url, extension, null, false, originalName);
+                    return;
+                }
+
                 if (['zip', 'odt'].includes(extension)) await this.loadJSZip();
                 if (['md', 'markdown'].includes(extension)) await this.loadMarked();
                 if (extension === 'docx') await this.loadMammoth();
@@ -367,6 +377,10 @@
                     this.currentPath = '';
                     this.renderZipFolder();
                 } else {
+                    // Force PDF MIME type if missing/incorrect from local server
+                    if (extension === 'pdf' && (!blob.type || blob.type !== 'application/pdf')) {
+                        blob = new Blob([blob], { type: 'application/pdf' });
+                    }
                     this.currentObjectUrl = url.startsWith('blob:') ? url : URL.createObjectURL(blob);
                     this.renderContent(this.currentObjectUrl, extension, blob, false, originalName);
                 }
@@ -606,14 +620,39 @@
                     this.renderError("Cannot read local data files for preview due to browser security.", contentArea);
                 }
             } else if (['html', 'htm', 'pdf'].includes(extension)) {
-                const iframe = document.createElement('iframe');
-                iframe.src = objectUrl;
-                iframe.width = '100%';
-                iframe.height = '100%';
-                iframe.title = 'File Preview';
-                iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
-                contentArea.appendChild(iframe);
-            } else if (['txt', 'log', 'json', 'xml', 'yaml', 'ini', 'tex', 'latex', 'doc', 'py', 'ps1', 'js', 'sh', 'bat', 'rb', 'pl', 'php', 'go', 'java', 'c', 'cpp', 'cs', 'sql', 'css'].includes(extension)) {
+                if (extension === 'pdf') {
+                    const obj = document.createElement('object');
+                    obj.data = objectUrl;
+                    obj.type = 'application/pdf';
+                    obj.style.width = '100%';
+                    obj.style.height = '100%';
+                    
+                    // Add a fallback message if the browser fails to load the PDF
+                    const fallback = document.createElement('div');
+                    fallback.style.padding = '20px';
+                    fallback.style.color = '#ccc';
+                    fallback.innerHTML = 'Your browser cannot display this PDF inline. <a href="' + objectUrl + '" target="_blank" style="color: #4da6ff;">Open in new tab</a> or download it.';
+                    obj.appendChild(fallback);
+                    
+                    contentArea.appendChild(obj);
+                } else {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = objectUrl;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.border = 'none';
+                    iframe.title = 'File Preview';
+                    // Note: allow-scripts is often needed for HTML previews
+                    if (!isLocalFile) {
+                        iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
+                    }
+                    contentArea.appendChild(iframe);
+                }
+                
+                // Ensure the content area itself is ready to display the content
+                contentArea.style.display = 'flex';
+                contentArea.style.flexDirection = 'column';
+            } else if (['txt', 'log', 'json', 'xml', 'yaml', 'yml', 'ini', 'tex', 'latex', 'py', 'ps1', 'js', 'sh', 'bat', 'rb', 'pl', 'php', 'go', 'java', 'c', 'cpp', 'cs', 'sql', 'r', 'css', 'scss', 'less'].includes(extension)) {
                 let text = typeof blob === 'string' ? blob : await blob.text();
                 if (extension === 'json') {
                     try { text = JSON.stringify(JSON.parse(text), null, 2); } catch (e) { }
@@ -900,7 +939,7 @@
                     'png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg', 'tiff', 'tif', 'pdf',
                     'html', 'htm', 'docx', 'odt', 'xlsx', 'xls', 'ods', 'pptx', 'ppt', 'odp'
                 ];
-                const textTypes = ['csv', 'tsv', 'txt', 'log', 'json', 'xml', 'yaml', 'ini', 'md', 'markdown', 'tex', 'latex'];
+                const textTypes = ['csv', 'tsv', 'txt', 'log', 'json', 'xml', 'yaml', 'yml', 'ini', 'md', 'markdown', 'tex', 'latex', 'py', 'ps1', 'js', 'sh', 'bat', 'rb', 'pl', 'php', 'go', 'java', 'c', 'cpp', 'cs', 'sql', 'r', 'css', 'scss', 'less'];
 
                 if (binaryTypes.includes(extension)) {
                     const blob = await entry.async('blob');
